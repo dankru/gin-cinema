@@ -1,0 +1,258 @@
+{{template "_head.html"}}
+<body>
+  <div class="wrapper">
+    {{template "_header.html"}}
+    <div class="tabs">
+      <div class="tabs__container _container">
+        <a href='/{{index .Tabs 0}}' class="tabs__link link">
+          <div class="tab">
+            <div class="tab__title title">{{index .Days 0}}</div>
+            <div class="tab__subtitle subtitle">Сегодня, {{index .WeekDays 0}}</div>
+          </div>
+        </a>
+        <a href="/{{index .Tabs 1}}" class="tabs__link link">
+          <div class="tab">
+            <div class="tab__title title">{{index .Days 1}}</div>
+            <div class="tab__subtitle subtitle">Завтра, {{index .WeekDays 1}}</div>
+          </div>
+        </a>
+        <a href="/{{index .Tabs 2}}" class="tabs__link link">
+          <div class="tab">
+            <div class="tab__title title">{{index .Days 2}}</div>
+            <div class="tab__subtitle subtitle">{{index .WeekDays 2}}</div>
+          </div>
+        </a>
+        <a href="/{{index .Tabs 3}}" class="tabs__link link">
+          <div class="tab">
+            <div class="tab__title title">{{index .Days 3}}</div>
+            <div class="tab__subtitle subtitle">{{index .WeekDays 3}}</div>
+          </div>
+        </a>
+        <a href="/{{index .Tabs 4}}" class="tabs__link link">
+          <div class="tab">
+            <div class="tab__title title">{{index .Days 4}}</div>
+            <div class="tab__subtitle subtitle">{{index .WeekDays 4}}</div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="content">
+      {{ if eq .Admin true}}
+      <div class="content__container _container admin">
+        <div class="content__forms">
+          <div class="form">
+            <input type="checkbox" class="redactMode" />
+            <input type="text" class="titleInput inputField" placeholder="Название фильма" />
+            <textarea class="textInput inputField" placeholder="Описание"></textarea>
+            <label class="custom-file-upload button">
+              <input type="file" class="input-img" />
+              Выберите обложку
+            </label>
+            <p>Дата: <input type="text" id="datepicker" /></p>
+            2D
+            <input
+              type="text"
+              class="timeInput2d inputField"
+              placeholder="время через запятую (11:30, 12:30...)" />
+            <input
+              type="text"
+              class="priceInput2d inputField"
+              placeholder="цена через запятую (350, 450, 600...)" />
+            3D
+            <input
+              type="text"
+              class="timeInput3d inputField"
+              placeholder="время через запятую (11:30, 12:30...)" />
+            <input
+              type="text"
+              class="priceInput3d inputField"
+              placeholder="цена через запятую (350, 450, 600...)" />
+            <div class="buttons">
+              <div class="addOffline-FilmsBtn button formButton">Добавить</div>
+              <div class="deleteOffline-FilmsBtn button formButton">Удалить</div>
+            </div>
+          </div>
+        </div>
+        {{ else }}
+        <div class="content__container _container">
+          {{ end }}
+          <div class="content__items offline-items">
+            {{ range $_, $f := .Content.FilmRows }}
+            <div class="item">
+              <div class="card">
+                <div class="card__image">
+                  <img src="../img/{{$f.Image}}" width="330px" height="320px" alt="Clancy" />
+                </div>
+                <div class="card__title">{{$f.Title}}</div>
+                <div class="card__subtitle">Фильм</div>
+              </div>
+              <div class="timeTables">
+                <div class="timeTable2d">
+                  {{ $d2 := $.Content.DatePrice2DRows}} {{ range $_, $row := $d2}} {{if eq
+                  $row.FilmId $f.Id}}
+                  <a href="/films/2d/{{$f.Id}}/{{.Date}}/{{.Price}}" class="link">
+                    <div class="timetable__row">
+                      <div class="timeTable__block">
+                        <div class="title">{{printf "%.5s" .Time}}</div>
+                        <div class="subtitle">{{.Price}}р</div>
+                      </div>
+                    </div>
+                  </a>
+                  {{end}} {{end}}
+                </div>
+                <div class="timeTable3d">
+                  {{ $d3 := $.Content.DatePrice3DRows}} {{ range $_, $row := $d3}} {{if eq
+                  $row.FilmId $f.Id}}
+                  <a href="/films/3d/{{$f.Id}}/{{.Date}}/{{.Price}}" class="link">
+                    <div class="timetable__row">
+                      <div class="timeTable__block">
+                        <div class="title">{{printf "%.5s" .Time}}</div>
+                        <div class="subtitle">{{.Price}}р</div>
+                      </div>
+                    </div>
+                  </a>
+                  {{end}} {{end}}
+                </div>
+              </div>
+            </div>
+            {{ end }}
+            <!-- <div class="item">
+                <div class="card">
+                  <div class="card__image">
+                    <img src="../img/clancy 5.jpg" alt="Clancy" />
+                  </div>
+                  <div class="card__title">Полуночный божественный спелл</div>
+                  <div class="card__subtitle">Фильм</div>
+                </div>
+                <div class="timeTables">
+                  <div class="timeTable2d">
+                    <div class="timetable__row">
+                      <div class="timeTable__block">
+                        <div class="title">14:00</div>
+                        <div class="subtitle">350р</div>
+                      </div>
+                    </div>
+                    <div class="timetable__row">
+                      <div class="timeTable__block">
+                        <div class="title">16:15</div>
+                        <div class="subtitle">350р</div>
+                      </div>
+                    </div>
+                    <div class="timetable__row">
+                      <div class="timeTable__block">
+                        <div class="title">17:35</div>
+                        <div class="subtitle">450р</div>
+                      </div>
+                    </div>
+                    <div class="timetable__row">
+                      <div class="timeTable__block">
+                        <div class="title">19:15</div>
+                        <div class="subtitle">450р</div>
+                      </div>
+                    </div>
+                    <div class="timetable__row">
+                      <div class="timeTable__block">
+                        <div class="title">22:15</div>
+                        <div class="subtitle">750р</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="timeTable3d">
+                    <div class="timetable__row">
+                      <div class="timeTable__block">
+                        <div class="title">14:00</div>
+                        <div class="subtitle">350р</div>
+                      </div>
+                    </div>
+                    <div class="timetable__row">
+                      <div class="timeTable__block">
+                        <div class="title">16:15</div>
+                        <div class="subtitle">350р</div>
+                      </div>
+                    </div>
+                    <div class="timetable__row">
+                      <div class="timeTable__block">
+                        <div class="title">17:35</div>
+                        <div class="subtitle">450р</div>
+                      </div>
+                    </div>
+                    <div class="timetable__row">
+                      <div class="timeTable__block">
+                        <div class="title">19:15</div>
+                        <div class="subtitle">450р</div>
+                      </div>
+                    </div>
+                    <div class="timetable__row">
+                      <div class="timeTable__block">
+                        <div class="title">22:15</div>
+                        <div class="subtitle">750р</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    {{template "_footer.html"}}
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js?_v=20230131223127"></script>
+  <script
+    type="text/javascript"
+    src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <script>
+    $(function () {
+      $('#datepicker').datepicker();
+    });
+  </script>
+  <script>
+    $.datepicker.regional['ru'] = {
+      closeText: 'Закрыть',
+      prevText: 'Предыдущий',
+      nextText: 'Следующий',
+      currentText: 'Сегодня',
+      monthNames: [
+        'Январь',
+        'Февраль',
+        'Март',
+        'Апрель',
+        'Май',
+        'Июнь',
+        'Июль',
+        'Август',
+        'Сентябрь',
+        'Октябрь',
+        'Ноябрь',
+        'Декабрь',
+      ],
+      monthNamesShort: [
+        'Янв',
+        'Фев',
+        'Мар',
+        'Апр',
+        'Май',
+        'Июн',
+        'Июл',
+        'Авг',
+        'Сен',
+        'Окт',
+        'Ноя',
+        'Дек',
+      ],
+      dayNames: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
+      dayNamesShort: ['вск', 'пнд', 'втр', 'срд', 'чтв', 'птн', 'сбт'],
+      dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+      weekHeader: 'Не',
+      dateFormat: 'yy-mm-dd',
+      firstDay: 1,
+      isRTL: false,
+      showMonthAfterYear: false,
+      yearSuffix: '',
+    };
+    $.datepicker.setDefaults($.datepicker.regional['ru']);
+  </script>
+  <script src="../js/app.js"></script>
+  <script src="../js/films.js"></script>
+</body>

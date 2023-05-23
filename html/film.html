@@ -1,0 +1,78 @@
+{{template "_head.html"}}
+<body>
+  <div class="wrapper">
+    {{template "_header.html"}}
+
+    <div class="content">
+      <div class="content__container _container">
+        <div class="content__items offline-items">
+
+          <!-- Сделать стили занятых мест! -->
+          <div class="offline-item">
+            <div class="offline-card">
+              <div class="offline-card__image">
+                <img src="../../../../img/clancy 5.jpg" alt="Clancy" />
+              </div>
+              <div class="offline-card__content">
+                <div class="card__title">Полуночный божественный спелл</div>
+                <div class="card__title">Фильм</div>
+                <div class="card__title">01.05.2023</div>
+                <div class="card__title">14:20</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content__seats seats">
+          <div class="seats__container _container">
+            <div class="seats__area">
+              {{$r := .Rows}}
+              {{$c := .Columns}}
+              {{$s := .Seats}}
+             {{range $i, $se := $s}}
+             {{end}}
+
+
+              {{range $_, $ci := $c}}
+
+
+              <div class="seats__row">
+
+                {{range $_, $ri := $r}}
+
+                
+                <div class="seats__block block">
+                  <div class="block__number">{{$ri}}</div>
+                </div>
+
+                {{end}}
+
+              </div>
+
+              {{end}}
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="table">
+      <div class="table__area _container">
+        <div class="table__cards"></div>
+        <div class="table__buttons">
+          <div class="table__price"></div>
+          <div class="purchase_btn button">Купить</div>
+        </div>
+      </div>
+    </div>
+
+    {{template "_footer.html"}}
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js?_v=20230131223127"></script>
+  <script
+    type="text/javascript"
+    src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+  <script src="../../../../assets/js/app.js"></script>
+  <script src="../../../../assets/js/film.js"></script>
+</body>
